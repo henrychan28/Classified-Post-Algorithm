@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>SCMP - Editor Webpage</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/blog-post.css" rel="stylesheet">
+
+  <script src="jquery.js"/>
+  <script src="vendor/jquery/jquery.min.js"> 
+
+  </script>
+  <script>
+    window.onload = function () {
+
+      var chart = new CanvasJS.Chart("chartContainer", {
+        animationEnabled: true,
+        title:{
+          text: "",
+          horizontalAlign: "left"
+        },
+        data: [{
+          type: "doughnut",
+          startAngle: 60,
+    //innerRadius: 60,
+    indexLabelFontSize: 17,
+    indexLabel: "#percent%",
+    toolTipContent: "",
+    dataPoints: [
+    { y: 67, label: "" },
+    { y: 28, label: "" },
+
+    ]
+  }]
+});
+      chart.render();
+
+      var chart1 = new CanvasJS.Chart("chartContainer1", {
+        animationEnabled: true,
+        title:{
+          text: "",
+          horizontalAlign: "left"
+        },
+        data: [{
+          type: "doughnut",
+          startAngle: 60,
+    //innerRadius: 60,
+    indexLabelFontSize: 17,
+    indexLabel: "#percent%",
+    toolTipContent: "",
+    dataPoints: [
+    { y: 100, label: "" },
+    { y: 28, label: "" },
+
+    ]
+  }]
+});
+      chart1.render();
+
+    }
+
+    function pressenter(){
+        if(event.keyCode == 13){
+          var message = $('textarea').val();
+          var topic = document.getElementById("inputtopic").value;
+          console.log(message);
+          console.log(topic);
+
+          var jsontitle = "{\"title\":\""+message+"\"}";
+          var jsontopic = "{\"topic\":\""+topic+"\"}";
+          console.log(jsontitle);
+          console.log(jsontopic);
+
+          var xhr = new XMLHttpRequest();
+          var url = "http://localhost:8080";
+          xhr.open("POST", url, true);
+          xhr.setRequestHeader("Content-type", "application/json");
+          xhr.onreadystatechange = function () {
+              if (xhr.readyState === 4 && xhr.status === 200) {
+                  console.log('it works!');
+                  var json = JSON.parse(xhr.responseText);
+                  console.log(json.email + ", " + json.password);
+              }
+          };
+          var data = JSON.stringify({"email": "hey@mail.com", "password": "101010"});
+          xhr.send(data);
+
+
+
+        }
+      //call JS
+    }
+    
+    
+
+  </script>
+
+</head>
+
+<body>
+  <div class="container">
+      <img src="scmp.png" style="width: 403px;height:42px;">
+      <div class="collapse navbar-collapse"">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  <!-- Page Content -->
+  <div class="container">
+    <div class="row">
+      <!-- Post Content Column -->
+      <div class="col-lg-8">
+        <hr>
+        <!-- Date/Time -->
+        <FORM>     
+
+          <div class="card-body">
+            <div class="input-group">
+            Title:
+              <textarea name="inputtext" rows="4" cols="50" style="border:None; background-color: #FAFAFA;width: 900px;height: 100px; font-size: 20px;" onkeydown="pressenter()">Snapchat's rise from obscure app to Facebook rival charted in How To Turn Down A Billion Dollar </textarea>
+            </div>
+            Topic:
+            <div class="input-group">
+              <input type="text" name="inputtopic" id="inputtopic" style="border:None; background-color: #FAFAFA;width: 300px;">
+            </div>
+          </div>
+        </FORM>
+
+
+        <hr>
+
+        <!-- Preview Image -->
+        <img class="img-fluid rounded" src="snap.png" alt="">
+        <img class="img-fluid rounded" src="text.jpeg" >
+
+
+        <!-- Post Content -->
+
+
+
+        <!-- Comment with nested comments -->
+        <div class="media mb-4">
+
+          <div class="media-body">
+            <div class="media mt-4">  
+            </div>
+            <div class="media mt-4">
+              <div class="media-body"> 
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Sidebar Widgets Column -->
+      <div class="col-md-4">
+        <p align="center">
+          <font color="red" size="5" a>Preview Mode</font>
+        </p>
+       
+
+        <!-- Categories Widget -->
+        <div class="card my-4">
+          <h5 class="card-header">Result</h5>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-6">
+                <p align="center">Image Attractiveness</p>
+                <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;">
+                </div>
+                <script src="canvasjs.min.js"></script>
+
+              </div>
+              <div class="col-lg-6">
+                <p align="center">Topic Attractiveness</p>
+                <div id="chartContainer1" style="height: 370px; max-width: 920px; margin: 0px auto;">
+                </div>
+                <script src="canvasjs.min.js"></script>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Side Widget -->
+        <div class="card my-4">
+          <h5 class="card-header">Side Widget</h5>
+          <div class="card-body">
+            You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!</div>
+          </div>
+
+        </div>
+
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  </body>
+
+  </html>
